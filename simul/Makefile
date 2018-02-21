@@ -1,0 +1,5 @@
+
+CFLAGS=-Wall
+
+all : simul
+

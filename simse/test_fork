@@ -1,0 +1,5 @@
+SS = 4
+SYSC %0 %0 6	  // deux processus
+SYSC %0 %0 6   // trois processus + erreur
+SYSC %0 %0 2   // -1 %0 ou PID du fils
+SYSC %0 %0 1   // -1 %0 ou PID du fils

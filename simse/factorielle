@@ -1,0 +1,58 @@
+  // main :
+  SS = 69
+  SUB %0 %0 0       // 0 <- 0
+  SUB %6 %6 1       // %6 <- (-1)
+  SUB %1 %1 -68     // %1 <- 68
+  SYSC %3 %0 5      // n <- getchar
+  SUB %3 %0 48      // n <- n - '0'
+  CMP %3 %0 -1
+  IFGT %0 %0 8      // if (n < 0)
+  SYSC %6 %0 1      //    Exit (-1)
+
+  STORE %3 %1 0     // PUSH n
+  SUB %1 %0 1
+  SUB %2 %2 -14     // %2 <- 14
+  STORE %2 %1 0     // PUSH %2
+  SUB %1 %0 1
+  JUMP %0 %0 17     // appel
+  ADD %1 %0 1       // POP r
+  LOAD %4 %1 0
+  SYSC %4 %0 1      // Exit r 
+       
+  // 17 :
+  CMP %1 %0 51
+  IFGT %0 %0 20      // if (%1 < 51)
+  SYSC %6 %0 1       //    Exit (-1)
+
+  ADD %1 %0 1        // POP %2
+  LOAD %2 %1 0     
+  ADD %1 %0 1        // POP n
+  LOAD %3 %1 0
+  CMP %3 %0 2
+
+  IFGT %0 %0 29      // if (n <= 2) {
+  STORE %3 %1 0      //    PUSH r = n
+  SUB %1 %0 1
+  JUMP %0 %2 0       //    retour
+                     // }
+  STORE %2 %1 0      // PUSH %2
+  SUB %1 %0 1      
+  STORE %3 %1 0      // PUSH n
+  SUB %1 %0 1      
+  SUB %3 %0 1        // n <- n - 1
+  STORE %3 %1 0      // PUSH (n-1)
+  SUB %1 %0 1
+  SUB %2 %2 -40      // %2 <- 40
+  STORE %2 %1 0      // PUSH %2
+  SUB %1 %0 1
+  JUMP %0 %0 17      // appel
+  ADD %1 %0 1        // POP r
+  LOAD %4 %1 0
+  ADD %1 %0 1        // POP n     
+  LOAD %3 %1 0   
+  MULT %4 %3 1       // r <- r * n
+  ADD %1 %0 1        // POP %2
+  LOAD %2 %1 0
+  STORE %4 %1 0      // PUSH r
+  SUB %1 %0 1      
+  JUMP %0 %2 0       // retour

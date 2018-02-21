@@ -1,0 +1,18 @@
+SS = 14
+SUB %0 %0 0             // R0 <- %0
+SUB %1 %1 -9            // R1 <- 9
+SYSC %1 %0 2         	// afficher R1
+STORE %1 %0 13          // sauvegarder R1 en memoire
+
+SYSC %2 %0 3   			// creer un nouveau thread
+IFGT %0 %0 10           // le pere jump
+
+LOAD %1 %0 13           // charger la memoire en R1
+ADD %1 %0 1             // incrementer R1
+STORE %1 %0 13          // sauvegarder R1 en memoire
+SYSC %2 %0 3   			// creer un nouveau thread
+JUMP %0 %0 6            // Saut en 6
+
+LOAD %1 %0 13         	// charger la memoire en R1
+SYSC %1 %0 2        	// afficher R1
+JUMP %0 %0 11        	// saut en 10

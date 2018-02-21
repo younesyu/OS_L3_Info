@@ -1,0 +1,14 @@
+SS = 14
+SUB %0 %0 0
+SUB %1 %1 -9
+SYSC %1 %0 2
+STORE %1 %0 13
+SYSC %2 %0 3
+IFGT %0 %0 10
+LOAD %1 %0 13
+ADD %1 %0 1
+STORE %1 %0 13
+JUMP %0 %0 6
+LOAD %1 %0 13
+SYSC %1 %0 2
+JUMP %0 %0 10

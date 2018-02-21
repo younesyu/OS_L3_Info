@@ -1,0 +1,109 @@
+ SS = 134
+ // initialisation :
+  SUB %0 %0 0  			// zero <- 0
+  SUB %7 %7 1  			// error <- (-1)
+  SUB %1 %1 -133  		// pile <- 133
+  SUB %3 %3 0   		// a <- 0
+
+  SUB %4 %4 -1   		// b <- 1
+
+  SUB %5 %5 -2   		// c <- 2
+
+  SYSC %6 %0 5 			// n <- getchar
+
+
+
+  SUB %6 %0 48   		// n <- n - '0'
+  CMP %0 %6 0  			// if (n < 0)
+  IFGT %0 %0 23  		// erreur
+
+ // premier appel fonction hanoi :
+  SUB %2 %2 -22 		// adr <- 22
+  STORE %2 %1 0 		// PUSH adr
+  SUB %1 %0 1
+  STORE %3 %1 0  		// PUSH a
+  SUB %1 %0 1
+  STORE %4 %1 0  		// PUSH b
+  SUB %1 %0 1
+  STORE %5 %1 0  		// PUSH c
+  SUB %1 %0 1
+  STORE %6 %1 0  		// PUSH n
+  SUB %1 %0 1
+  JUMP %0 %0 24  	// hanoi
+  SYSC %0 %0 1 		// Exit 0
+
+ // erreur :
+  SYSC %7 %0 1  		// Exit (-1)
+
+ // hanoi(a b c n) :
+  CMP %0 %1 -83 		// if (%1 <= 0)
+  IFGT %0 %0 23 		// erreur
+  ADD %1 %0 1 			// POP n
+  LOAD %6 %1 0 
+  ADD %1 %0 1 			// POP c
+  LOAD %5 %1 0 
+  ADD %1 %0 1 			// POP b
+  LOAD %4 %1 0 
+  ADD %1 %0 1 			// POP a
+  LOAD %3 %1 0 
+  CMP %0 %6 -1  		// if (n == 0)
+  IFGT %0 %0 81 	// retour
+
+ // %6 > 0 :
+  STORE %3 %1 0  		// PUSH a
+  SUB %1 %0 1
+  STORE %4 %1 0  		// PUSH b
+  SUB %1 %0 1
+  STORE %5 %1 0  		// PUSH c
+  SUB %1 %0 1
+  STORE %6 %1 0  		// PUSH n
+  SUB %1 %0 1
+
+ // hanoi(a c b n-1) :
+  SUB %6 %0 1   		// n <- n - 1
+  SUB %2 %2 -57 		// adr <- 57
+  STORE %2 %1 0 		// PUSH adr
+  SUB %1 %0 1
+  STORE %3 %1 0  		// PUSH a
+  SUB %1 %0 1
+  STORE %5 %1 0  		// PUSH c
+  SUB %1 %0 1
+  STORE %4 %1 0  		// PUSH b
+  SUB %1 %0 1
+  STORE %6 %1 0  		// PUSH (n-1)
+  SUB %1 %0 1
+  JUMP %0 %0 24  		// hanoi
+
+ // affichage :
+  ADD %1 %0 1 			// POP n
+  LOAD %6 %1 0 
+  ADD %1 %0 1 			// POP c
+  LOAD %5 %1 0 
+  ADD %1 %0 1 			// POP b
+  LOAD %4 %1 0 
+  ADD %1 %0 1 			// POP a
+  LOAD %3 %1 0 
+
+  SYSC %3 %0 2  			// PUT a
+  SYSC %5 %0 2  		// PUT c
+  SYSC %7 %0 2  		// PUT (-1)
+
+ // hanoi(b a c n-1) :
+  SUB %6 %0 1   		// n <- n - 1
+  SUB %2 %2 -81 		// adr <- 81
+  STORE %2 %1 0 		// PUSH adr
+  SUB %1 %0 1
+  STORE %4 %1 0  		// PUSH b
+  SUB %1 %0 1
+  STORE %3 %1 0 		// PUSH a
+  SUB %1 %0 1
+  STORE %5 %1 0 		// PUSH c
+  SUB %1 %0 1
+  STORE %6 %1 0  		// PUSH (n-1)
+  SUB %1 %0 1
+  JUMP %0 %0 24  		// hanoi
+
+ // retour :
+  ADD %1 %0 1 			// POP adr
+  LOAD %2 %1 0 
+  JUMP %0 %2 0  		// retour
